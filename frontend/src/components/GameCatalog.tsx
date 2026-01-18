@@ -22,6 +22,8 @@ export function GameCatalog({
   const [searchTerm, setSearchTerm] = useState('');
   const [filter, setFilter] = useState<FilterType>('all');
   const [sortBy, setSortBy] = useState<SortType>('name');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(12);
 
   const filteredAndSortedGames = useMemo(() => {
     let result = games.filter((game) =>
@@ -50,6 +52,24 @@ export function GameCatalog({
 
     return result;
   }, [games, searchTerm, filter, sortBy]);
+
+  // Resetar para página 1 quando filtros mudarem
+  useMemo(() => {
+    setCurrentPage(1);
+  }, [searchTerm, filter, sortBy]);
+
+  // Calcular paginação
+  const totalPages = Math.ceil(filteredAndSortedGames.length / itemsPerPage);
+  const paginatedGames = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return filteredAndSortedGames.slice(startIndex, endIndex);
+  }, [filteredAndSortedGames, currentPage, itemsPerPage]);
+
+  const goToPage = (page: number) => {
+    setCurrentPage(Math.max(1, Math.min(page, totalPages)));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const stats = useMemo(() => {
     const total = games.length;
@@ -190,9 +210,12 @@ export function GameCatalog({
             <span className="results-count">
               {filteredAndSortedGames.length} {filteredAndSortedGames.length === 1 ? 'jogo encontrado' : 'jogos encontrados'}
             </span>
+            <span className="page-info">
+              Página {currentPage} de {totalPages}
+            </span>
           </div>
           <div className="games-grid">
-            {filteredAndSortedGames.map((game) => (
+            {paginatedGames.map((game) => (
               <GameCard
                 key={game.id}
                 game={game}
@@ -201,6 +224,69 @@ export function GameCatalog({
               />
             ))}
           </div>
+          
+          <div className="pagination">
+              <button
+                className="pagination-btn"
+                onClick={() => goToPage(1)}
+                disabled={currentPage === 1}
+                title="Primeira página"
+              >
+                <span className="material-symbols-outlined">first_page</span>
+              </button>
+              <button
+                className="pagination-btn"
+                onClick={() => goToPage(currentPage - 1)}
+                disabled={currentPage === 1}
+                title="Página anterior"
+              >
+                <span className="material-symbols-outlined">chevron_left</span>
+              </button>
+              
+              <div className="pagination-numbers">
+                {Array.from({ length: totalPages }, (_, i) => i + 1)
+                  .filter(page => {
+                    // Mostrar primeira, última, atual e páginas próximas
+                    if (page === 1 || page === totalPages) return true;
+                    if (Math.abs(page - currentPage) <= 1) return true;
+                    return false;
+                  })
+                  .map((page, idx, arr) => {
+                    // Adicionar separador se houver salto
+                    const prevPage = arr[idx - 1];
+                    const showSeparator = prevPage && page - prevPage > 1;
+                    
+                    return (
+                      <div key={page} style={{ display: 'flex', gap: '0.5rem' }}>
+                        {showSeparator && <span className="pagination-separator">...</span>}
+                        <button
+                          className={`pagination-number ${page === currentPage ? 'active' : ''}`}
+                          onClick={() => goToPage(page)}
+                        >
+                          {page}
+                        </button>
+                      </div>
+                    );
+                  })}
+              </div>
+              
+              <button
+                className="pagination-btn"
+                onClick={() => goToPage(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                title="Próxima página"
+              >
+                <span className="material-symbols-outlined">chevron_right</span>
+              </button>
+              <button
+                className="pagination-btn"
+                onClick={() => goToPage(totalPages)}
+                disabled={currentPage === totalPages}
+                title="Última página"
+              >
+                <span className="material-symbols-outlined">last_page</span>
+              </button>
+            </div>
         </>
       )}
     </div>
