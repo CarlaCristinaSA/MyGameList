@@ -1,0 +1,1 @@
+UPDATE `game` SET `finished` = TRUE WHERE `name` IN ('The Legend of Zelda: Breath of the Wild', 'Elden Ring', 'Cyberpunk 2077', 'The Witcher 3: Wild Hunt', 'Dark Souls III', 'Hollow Knight', 'Hades', 'Stardew Valley');
