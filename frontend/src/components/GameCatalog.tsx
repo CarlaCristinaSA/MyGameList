@@ -228,63 +228,75 @@ export function GameCatalog({
           <div className="pagination">
               <button
                 className="pagination-btn"
-                onClick={() => goToPage(1)}
-                disabled={currentPage === 1}
-                title="Primeira página"
-              >
-                <span className="material-symbols-outlined">first_page</span>
-              </button>
-              <button
-                className="pagination-btn"
                 onClick={() => goToPage(currentPage - 1)}
                 disabled={currentPage === 1}
-                title="Página anterior"
+                title="Anterior"
               >
                 <span className="material-symbols-outlined">chevron_left</span>
               </button>
               
               <div className="pagination-numbers">
-                {Array.from({ length: totalPages }, (_, i) => i + 1)
-                  .filter(page => {
-                    // Mostrar primeira, última, atual e páginas próximas
-                    if (page === 1 || page === totalPages) return true;
-                    if (Math.abs(page - currentPage) <= 1) return true;
-                    return false;
-                  })
-                  .map((page, idx, arr) => {
-                    // Adicionar separador se houver salto
-                    const prevPage = arr[idx - 1];
-                    const showSeparator = prevPage && page - prevPage > 1;
-                    
-                    return (
-                      <div key={page} style={{ display: 'flex', gap: '0.5rem' }}>
-                        {showSeparator && <span className="pagination-separator">...</span>}
-                        <button
-                          className={`pagination-number ${page === currentPage ? 'active' : ''}`}
-                          onClick={() => goToPage(page)}
-                        >
-                          {page}
-                        </button>
-                      </div>
+                {(() => {
+                  const pages = [];
+                  
+                  // Sempre mostrar primeira página
+                  pages.push(
+                    <button
+                      key={1}
+                      className={`pagination-number ${currentPage === 1 ? 'active' : ''}`}
+                      onClick={() => goToPage(1)}
+                    >
+                      1
+                    </button>
+                  );
+                  
+                  // Se a página atual está longe do início, adicionar separador
+                  if (currentPage > 3) {
+                    pages.push(<span key="sep1" className="pagination-separator">...</span>);
+                  }
+                  
+                  // Mostrar páginas ao redor da atual
+                  for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+                    pages.push(
+                      <button
+                        key={i}
+                        className={`pagination-number ${currentPage === i ? 'active' : ''}`}
+                        onClick={() => goToPage(i)}
+                      >
+                        {i}
+                      </button>
                     );
-                  })}
+                  }
+                  
+                  // Se a página atual está longe do fim, adicionar separador
+                  if (currentPage < totalPages - 2) {
+                    pages.push(<span key="sep2" className="pagination-separator">...</span>);
+                  }
+                  
+                  // Sempre mostrar última página (se houver mais de uma)
+                  if (totalPages > 1) {
+                    pages.push(
+                      <button
+                        key={totalPages}
+                        className={`pagination-number ${currentPage === totalPages ? 'active' : ''}`}
+                        onClick={() => goToPage(totalPages)}
+                      >
+                        {totalPages}
+                      </button>
+                    );
+                  }
+                  
+                  return pages;
+                })()}
               </div>
               
               <button
                 className="pagination-btn"
                 onClick={() => goToPage(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                title="Próxima página"
+                title="Próxima"
               >
                 <span className="material-symbols-outlined">chevron_right</span>
-              </button>
-              <button
-                className="pagination-btn"
-                onClick={() => goToPage(totalPages)}
-                disabled={currentPage === totalPages}
-                title="Última página"
-              >
-                <span className="material-symbols-outlined">last_page</span>
               </button>
             </div>
         </>
