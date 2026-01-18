@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import type { Game } from '../types/Game';
 import { GameCard } from './GameCard';
 import './GameCatalog.css';
@@ -54,7 +54,7 @@ export function GameCatalog({
   }, [games, searchTerm, filter, sortBy]);
 
   // Resetar para página 1 quando filtros mudarem
-  useMemo(() => {
+  useEffect(() => {
     setCurrentPage(1);
   }, [searchTerm, filter, sortBy]);
 

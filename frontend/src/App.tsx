@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Navbar, Home, GameForm, GameCatalog, Modal } from './components';
 import type { Game, CreateGameInput } from './types/Game';
 import { useGamesAPI } from './services';
@@ -13,10 +13,15 @@ function App() {
   
   const { fetchGames, createGame, updateGame, deleteGame, isLoading, error } = useGamesAPI();
 
+  const loadGames = useCallback(async () => {
+    const fetchedGames = await fetchGames();
+    setGames(fetchedGames);
+  }, [fetchGames]);
+
   // Carrega jogos ao montar o componente
   useEffect(() => {
     loadGames();
-  }, []);
+  }, [loadGames]);
 
   // Monitora erros da API
   useEffect(() => {
@@ -25,11 +30,6 @@ function App() {
       console.error('Erro na API:', error);
     }
   }, [error]);
-
-  const loadGames = async () => {
-    const fetchedGames = await fetchGames();
-    setGames(fetchedGames);
-  };
 
   // Função para adicionar um novo jogo
   const handleAddGame = async (newGame: CreateGameInput) => {
