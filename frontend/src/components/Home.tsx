@@ -45,8 +45,7 @@ export function Home({ stats, onNavigate }: HomeProps) {
 
       <section className="stats-section">
         <h2 className="section-title">
-          <span className="material-symbols-outlined">analytics</span>
-          Estatísticas da Coleção
+          Estatísticas
         </h2>
         
         <div className="stats-grid">
@@ -80,26 +79,6 @@ export function Home({ stats, onNavigate }: HomeProps) {
             </div>
             <div className="stat-value">{stats.avgRating}</div>
             <div className="stat-label">Avaliação Média</div>
-          </div>
-        </div>
-
-        <div className="progress-card">
-          <div className="progress-header">
-            <span className="progress-title">Progresso de Conclusão</span>
-            <span className="progress-percentage">
-              {stats.total > 0 ? Math.round((stats.finished / stats.total) * 100) : 0}%
-            </span>
-          </div>
-          <div className="progress-bar">
-            <div 
-              className="progress-fill" 
-              style={{ 
-                width: `${stats.total > 0 ? (stats.finished / stats.total) * 100 : 0}%` 
-              }}
-            ></div>
-          </div>
-          <div className="progress-info">
-            {stats.finished} de {stats.total} jogos completados
           </div>
         </div>
       </section>
