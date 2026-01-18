@@ -10,51 +10,87 @@ interface GameCardProps {
 export function GameCard({ game, onEdit, onDelete }: GameCardProps) {
   const renderStars = (rating: number | null) => {
     const maxStars = 5;
-    // Trata null ou undefined como 0
     const validRating = rating ?? 0;
-    // Rating já está 0-5, não precisa dividir
     const filledStars = Math.round(validRating);
     return (
       <div className="stars">
         {Array.from({ length: maxStars }).map((_, i) => (
           <span key={i} className={i < filledStars ? 'star filled' : 'star'}>
-            ⭐
+            ★
           </span>
         ))}
       </div>
     );
   };
 
-  // Rating já está em escala 0-5
   const displayRating = game.star_rating ?? 0;
+  
+  const getRatingCategory = (rating: number) => {
+    if (rating >= 4.5) return { label: 'Obra-Prima', className: 'masterpiece' };
+    if (rating >= 4.0) return { label: 'Excelente', className: 'excellent' };
+    if (rating >= 3.0) return { label: 'Bom', className: 'good' };
+    if (rating >= 2.0) return { label: 'Regular', className: 'regular' };
+    return { label: 'Fraco', className: 'weak' };
+  };
+  
+  const ratingCategory = getRatingCategory(displayRating);
 
   return (
-    <div className="game-card">
+    <div className={`game-card ${ratingCategory.className}`}>
+      <div className="card-badge-container">
+        {game.finished === true && (
+          <div className="finished-badge">
+            <span className="badge-icon">✓</span>
+            <span className="badge-text">Finalizado</span>
+          </div>
+        )}
+        <div className={`rating-badge ${ratingCategory.className}`}>
+          {ratingCategory.label}
+        </div>
+      </div>
+
       <div className="card-header">
-        <h3>{game.name}</h3>
-        {game.finished === true && <span className="finished-badge">✓ Finalizado</span>}
+        <div className="game-icon">🎮</div>
+        <h3 className="game-title">{game.name}</h3>
       </div>
 
       <div className="card-content">
-        <p className="developer">
-          <strong>Desenvolvedor:</strong> {game.developer}
-        </p>
-        <p className="year">
-          <strong>Ano:</strong> {game.year}
-        </p>
+        <div className="info-row developer-row">
+          <span className="info-icon">👨‍💻</span>
+          <div className="info-text">
+            <span className="info-label">Desenvolvedor</span>
+            <span className="info-value">{game.developer}</span>
+          </div>
+        </div>
 
-        <div className="rating">
-          <strong>Rating:</strong> {renderStars(game.star_rating)}
-          <span className="rating-number">{displayRating.toFixed(1)}/5</span>
+        <div className="info-row year-row">
+          <span className="info-icon">📅</span>
+          <div className="info-text">
+            <span className="info-label">Ano de Lançamento</span>
+            <span className="info-value">{game.year}</span>
+          </div>
+        </div>
+
+        <div className="rating-container">
+          <div className="rating-header">
+            <span className="rating-icon">⭐</span>
+            <span className="rating-label">Avaliação</span>
+          </div>
+          <div className="rating-display">
+            {renderStars(game.star_rating)}
+            <span className="rating-number">{displayRating.toFixed(1)}</span>
+          </div>
         </div>
       </div>
 
       <div className="card-actions">
-        <button className="btn-edit" onClick={() => onEdit(game)} title="Editar">
-          ✎
+        <button className="btn-action btn-edit" onClick={() => onEdit(game)} title="Editar jogo">
+          <span className="btn-icon">✎</span>
+          <span className="btn-text">Editar</span>
         </button>
-        <button className="btn-delete" onClick={() => onDelete(game.id)} title="Deletar">
-          🗑️
+        <button className="btn-action btn-delete" onClick={() => onDelete(game.id)} title="Deletar jogo">
+          <span className="btn-icon">🗑️</span>
+          <span className="btn-text">Deletar</span>
         </button>
       </div>
     </div>
