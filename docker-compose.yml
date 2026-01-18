@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mygamelist-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: game_db
+      MYSQL_USER: gameuser
+      MYSQL_PASSWORD: gamepass
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - mygamelist-network
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: mygamelist-backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/game_db
+      SPRING_DATASOURCE_USERNAME: gameuser
+      SPRING_DATASOURCE_PASSWORD: gamepass
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    ports:
+      - "8081:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - mygamelist-network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: mygamelist-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - mygamelist-network
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+
+networks:
+  mygamelist-network:
+    driver: bridge
