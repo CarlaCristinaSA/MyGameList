@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { TabBar, GameForm, GameCatalog } from './components';
+import { Navbar, Home, GameForm, GameCatalog } from './components';
 import type { Game, CreateGameInput } from './types/Game';
 import { useGamesAPI } from './services';
 import './App.css';
 
 function App() {
-  const [activeTab, setActiveTab] = useState<'cadastro' | 'catalogo'>('cadastro');
+  const [activeTab, setActiveTab] = useState<'home' | 'cadastro' | 'catalogo'>('home');
   const [games, setGames] = useState<Game[]>([]);
   const [editingGame, setEditingGame] = useState<Game | null>(null);
   const [apiError, setApiError] = useState<string | null>(null);
@@ -95,25 +95,7 @@ function App() {
 
   return (
     <div className="app">
-      <header className="app-header">
-        <div className="game-icon">🎮</div>
-        <h1>Game Collection</h1>
-        <p>Organize sua coleção de jogos favoritos</p>
-        <div className="stats">
-          <div className="stat-item">
-            <span className="stat-value">{stats.total}</span>
-            <span className="stat-label">Jogos</span>
-          </div>
-          <div className="stat-item">
-            <span className="stat-value">{stats.finished}</span>
-            <span className="stat-label">Finalizados</span>
-          </div>
-          <div className="stat-item">
-            <span className="stat-value">⭐ {stats.avgRating}</span>
-            <span className="stat-label">Média</span>
-          </div>
-        </div>
-      </header>
+      <Navbar activeTab={activeTab} onTabChange={setActiveTab} />
 
       {apiError && (
         <div className="api-error">
@@ -125,7 +107,12 @@ function App() {
       )}
 
       <main className="app-main">
-        <TabBar activeTab={activeTab} onTabChange={setActiveTab} />
+        {activeTab === 'home' && (
+          <Home 
+            stats={stats} 
+            onNavigate={(tab) => setActiveTab(tab)} 
+          />
+        )}
 
         {activeTab === 'cadastro' && (
           <div className="tab-content">
