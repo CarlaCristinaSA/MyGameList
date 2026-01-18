@@ -28,19 +28,9 @@ export function GameCard({ game, onEdit, onDelete }: GameCardProps) {
   };
 
   const displayRating = game.star_rating ?? 0;
-  
-  const getRatingCategory = (rating: number) => {
-    if (rating >= 4.5) return { label: 'Obra-Prima', className: 'masterpiece' };
-    if (rating >= 4.0) return { label: 'Excelente', className: 'excellent' };
-    if (rating >= 3.0) return { label: 'Bom', className: 'good' };
-    if (rating >= 2.0) return { label: 'Regular', className: 'regular' };
-    return { label: 'Fraco', className: 'weak' };
-  };
-  
-  const ratingCategory = getRatingCategory(displayRating);
 
   return (
-    <div className={`game-card ${ratingCategory.className}`}>
+    <div className="game-card">
       <div className="card-badge-container">
         {game.finished === true && (
           <div className="finished-badge">
@@ -48,9 +38,6 @@ export function GameCard({ game, onEdit, onDelete }: GameCardProps) {
             <span className="badge-text">Finalizado</span>
           </div>
         )}
-        <div className={`rating-badge ${ratingCategory.className}`}>
-          {ratingCategory.label}
-        </div>
       </div>
 
       <div className="card-header">
