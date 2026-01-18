@@ -10,33 +10,31 @@ interface GameFormProps {
 }
 
 export function GameForm({ onSubmit, isLoading = false, initialData, onCancel }: GameFormProps) {
-  const [formData, setFormData] = useState<CreateGameInput>({
-    name: '',
-    developer: '',
-    year: new Date().getFullYear(),
-    star_rating: 5,
-    finished: false,
-  });
-  const [hoveredStar, setHoveredStar] = useState<number | null>(null);
-
-  useEffect(() => {
+  const getInitialFormData = (): CreateGameInput => {
     if (initialData) {
-      setFormData({
+      return {
         name: initialData.name,
         developer: initialData.developer,
         year: initialData.year || new Date().getFullYear(),
         star_rating: initialData.star_rating ?? 5,
         finished: initialData.finished ?? false,
-      });
-    } else {
-      setFormData({
-        name: '',
-        developer: '',
-        year: new Date().getFullYear(),
-        star_rating: 5,
-        finished: false,
-      });
+      };
     }
+    return {
+      name: '',
+      developer: '',
+      year: new Date().getFullYear(),
+      star_rating: 5,
+      finished: false,
+    };
+  };
+
+  const [formData, setFormData] = useState<CreateGameInput>(getInitialFormData);
+  const [hoveredStar, setHoveredStar] = useState<number | null>(null);
+
+  useEffect(() => {
+    setFormData(getInitialFormData());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialData]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
