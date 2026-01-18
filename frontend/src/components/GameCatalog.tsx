@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import type { Game } from '../types/Game';
 import { GameCard } from './GameCard';
 import './GameCatalog.css';
