@@ -71,7 +71,7 @@ export function GameForm({ onSubmit, isLoading = false, initialData, onCancel }:
 
   return (
     <form className="game-form" onSubmit={handleSubmit}>
-      <h1 className="form-title">CADASTRAR NOVO JOGO</h1>
+      <h1 className="form-title">{isEditing ? 'EDITAR JOGO' : 'CADASTRAR NOVO JOGO'}</h1>
       <div className="form-group">
         <label htmlFor="name">Nome</label>
         <input
