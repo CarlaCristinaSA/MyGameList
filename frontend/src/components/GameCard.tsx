@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import type { Game } from '../types/Game';
+import { ConfirmDialog } from './ConfirmDialog';
 import './GameCard.css';
 
 interface GameCardProps {
@@ -8,55 +10,94 @@ interface GameCardProps {
 }
 
 export function GameCard({ game, onEdit, onDelete }: GameCardProps) {
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+
   const renderStars = (rating: number | null) => {
     const maxStars = 5;
-    // Trata null ou undefined como 0
     const validRating = rating ?? 0;
-    // Rating já está 0-5, não precisa dividir
     const filledStars = Math.round(validRating);
     return (
       <div className="stars">
         {Array.from({ length: maxStars }).map((_, i) => (
           <span key={i} className={i < filledStars ? 'star filled' : 'star'}>
-            ⭐
+            ★
           </span>
         ))}
       </div>
     );
   };
 
-  // Rating já está em escala 0-5
   const displayRating = game.star_rating ?? 0;
 
   return (
     <div className="game-card">
+      <div className="card-badge-container">
+        {game.finished === true && (
+          <div className="finished-badge">
+            <span className="material-symbols-outlined badge-icon">check_circle</span>
+            <span className="badge-text">Finalizado</span>
+          </div>
+        )}
+      </div>
+
       <div className="card-header">
-        <h3>{game.name}</h3>
-        {game.finished === true && <span className="finished-badge">✓ Finalizado</span>}
+        <span className="material-symbols-outlined game-icon">sports_esports</span>
+        <h3 className="game-title">{game.name}</h3>
       </div>
 
       <div className="card-content">
-        <p className="developer">
-          <strong>Desenvolvedor:</strong> {game.developer}
-        </p>
-        <p className="year">
-          <strong>Ano:</strong> {game.year}
-        </p>
+        <div className="info-row developer-row">
+          <span className="material-symbols-outlined info-icon">code</span>
+          <div className="info-text">
+            <span className="info-label">Desenvolvedor</span>
+            <span className="info-value">{game.developer}</span>
+          </div>
+        </div>
 
-        <div className="rating">
-          <strong>Rating:</strong> {renderStars(game.star_rating)}
-          <span className="rating-number">{displayRating.toFixed(1)}/5</span>
+        <div className="info-row year-row">
+          <span className="material-symbols-outlined info-icon">calendar_month</span>
+          <div className="info-text">
+            <span className="info-label">Ano de Lançamento</span>
+            <span className="info-value">{game.year}</span>
+          </div>
+        </div>
+
+        <div className="rating-container">
+          <div className="rating-header">
+            <span className="material-symbols-outlined rating-icon">star</span>
+            <span className="rating-label">Avaliação</span>
+          </div>
+          <div className="rating-display">
+            {renderStars(game.star_rating)}
+            <span className="rating-number">{displayRating.toFixed(1)}</span>
+          </div>
         </div>
       </div>
 
       <div className="card-actions">
-        <button className="btn-edit" onClick={() => onEdit(game)} title="Editar">
-          ✎
+        <button className="btn-action btn-edit" onClick={() => onEdit(game)} title="Editar jogo">
+          <span className="material-symbols-outlined btn-icon">edit</span>
+          <span className="btn-text">Editar</span>
         </button>
-        <button className="btn-delete" onClick={() => onDelete(game.id)} title="Deletar">
-          🗑️
+        <button className="btn-action btn-delete" onClick={() => setShowDeleteDialog(true)} title="Deletar jogo">
+          <span className="material-symbols-outlined btn-icon">delete</span>
+          <span className="btn-text">Deletar</span>
         </button>
       </div>
+
+      <ConfirmDialog
+        isOpen={showDeleteDialog}
+        onClose={() => setShowDeleteDialog(false)}
+        onConfirm={() => {
+          onDelete(game.id);
+          setShowDeleteDialog(false);
+        }}
+        title="Confirmar Exclusão"
+        message={`Tem certeza que deseja excluir "${game.name}"? Esta ação não pode ser desfeita.`}
+        confirmText="Excluir"
+        cancelText="Cancelar"
+        type="danger"
+      />
     </div>
   );
 }

@@ -6,9 +6,10 @@ interface GameFormProps {
   onSubmit: (game: CreateGameInput) => void;
   isLoading?: boolean;
   initialData?: Game | null;
+  onCancel?: () => void;
 }
 
-export function GameForm({ onSubmit, isLoading = false, initialData }: GameFormProps) {
+export function GameForm({ onSubmit, isLoading = false, initialData, onCancel }: GameFormProps) {
   const [formData, setFormData] = useState<CreateGameInput>({
     name: '',
     developer: '',
@@ -18,7 +19,6 @@ export function GameForm({ onSubmit, isLoading = false, initialData }: GameFormP
   });
   const [hoveredStar, setHoveredStar] = useState<number | null>(null);
 
-  // Preenche o formulário quando initialData muda
   useEffect(() => {
     if (initialData) {
       setFormData({
@@ -71,6 +71,7 @@ export function GameForm({ onSubmit, isLoading = false, initialData }: GameFormP
 
   return (
     <form className="game-form" onSubmit={handleSubmit}>
+      <h1 className="form-title">{isEditing ? 'EDITAR JOGO' : 'CADASTRAR NOVO JOGO'}</h1>
       <div className="form-group">
         <label htmlFor="name">Nome</label>
         <input
@@ -98,14 +99,14 @@ export function GameForm({ onSubmit, isLoading = false, initialData }: GameFormP
       </div>
 
       <div className="form-group">
-        <label htmlFor="year">Ano</label>
+        <label htmlFor="year">Ano de Lançamento</label>
         <input
           type="number"
           id="year"
           name="year"
           value={formData.year}
           onChange={handleChange}
-          placeholder="Ano"
+          placeholder="Ano de Lançamento"
         />
       </div>
 
@@ -117,20 +118,22 @@ export function GameForm({ onSubmit, isLoading = false, initialData }: GameFormP
               key={star}
               type="button"
               className={`star-button ${
-                star <= (hoveredStar ?? formData.star_rating) ? 'filled' : ''
+                star <= (hoveredStar ?? formData.star_rating ?? 0) ? 'filled' : ''
               }`}
               onMouseEnter={() => setHoveredStar(star)}
               onMouseLeave={() => setHoveredStar(null)}
               onClick={() => setFormData((prev) => ({ ...prev, star_rating: star }))}
             >
-              ⭐
+              <span className="material-symbols-outlined">
+                {star <= (hoveredStar ?? formData.star_rating ?? 0) ? 'star' : 'star_outline'}
+              </span>
             </button>
           ))}
-          <span className="rating-display">{formData.star_rating}/5</span>
         </div>
       </div>
 
-      <div className="form-group checkbox">
+      <div className="form-group checkbox-button-group">
+        <label>Finalizado</label>
         <input
           type="checkbox"
           id="finished"
@@ -138,17 +141,30 @@ export function GameForm({ onSubmit, isLoading = false, initialData }: GameFormP
           checked={formData.finished}
           onChange={handleChange}
         />
-        <label htmlFor="finished">Finalizado</label>
+        <label htmlFor="finished" className="checkbox-button">
+          Finalizado
+        </label>
       </div>
 
-      <button type="submit" className="submit-button" disabled={isLoading}>
-        {isLoading 
-          ? 'Salvando...' 
-          : isEditing 
-            ? 'Atualizar Jogo' 
-            : 'Cadastrar Jogo'
-        }
-      </button>
+      <div className="form-actions">
+        {onCancel && (
+          <button type="button" className="cancel-button" onClick={onCancel}>
+            <span className="material-symbols-outlined">close</span>
+            Cancelar
+          </button>
+        )}
+        <button type="submit" className="submit-button" disabled={isLoading}>
+          <span className="material-symbols-outlined">
+            {isLoading ? 'hourglass_empty' : isEditing ? 'edit' : 'add_circle'}
+          </span>
+          {isLoading 
+            ? 'Salvando...' 
+            : isEditing 
+              ? 'Atualizar Jogo' 
+              : 'Cadastrar Jogo'
+          }
+        </button>
+      </div>
     </form>
   );
 }

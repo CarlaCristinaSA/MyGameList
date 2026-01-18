@@ -21,6 +21,14 @@
   z-index: 0;
 }
 
+.app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+}
+
 .api-error {
   background: linear-gradient(135deg, #FFE5E5, #FFD0D0);
   border-left: 6px solid var(--color-error);
@@ -62,98 +70,12 @@
   transform: scale(1.1);
 }
 
-.app-header {
-  text-align: center;
-  padding: 3rem 1rem;
-  border-bottom: 3px solid var(--color-border);
-  background: linear-gradient(135deg, rgba(255, 182, 193, 0.3), rgba(255, 200, 208, 0.2));
-  box-shadow: 0 4px 20px rgba(255, 182, 193, 0.2);
-  position: relative;
-  z-index: 5;
-}
-
-.game-icon {
-  font-size: 3.5rem;
-  animation: float 3s ease-in-out infinite;
-  margin-bottom: 1rem;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-.app-header h1 {
-  margin: 0 0 0.5rem 0;
-  font-size: 3rem;
-  background: linear-gradient(135deg, var(--color-secondary), var(--color-accent));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-weight: 800;
-  letter-spacing: 2px;
-}
-
-.app-header p {
-  margin: 0.5rem 0 1.5rem 0;
-  color: var(--color-text-light);
-  font-size: 1.1rem;
-  font-weight: 500;
-}
-
-.stats {
-  display: flex;
-  justify-content: center;
-  gap: 3rem;
-  margin-top: 2rem;
-  flex-wrap: wrap;
-}
-
-.stat-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1rem 2rem;
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 4px 15px rgba(255, 182, 193, 0.2);
-  border: 2px solid var(--color-border);
-  transition: all 0.3s ease;
-}
-
-.stat-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(255, 105, 180, 0.3);
-}
-
-.stat-value {
-  font-size: 2rem;
-  font-weight: 800;
-  color: var(--color-accent);
-  line-height: 1;
-}
-
-.stat-label {
-  font-size: 0.9rem;
-  color: var(--color-text-light);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-top: 0.5rem;
-  font-weight: 600;
-}
-
-.app-main {
-  flex: 1;
-  max-width: 1400px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 3rem 2rem;
-  position: relative;
-  z-index: 1;
-}
-
 .tab-content {
-  animation: fadeIn 0.3s ease;
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  animation: fadeIn 0.5s ease;
 }
 
 @keyframes fadeIn {
@@ -168,15 +90,7 @@
 }
 
 @media (max-width: 768px) {
-  .app-header {
-    padding: 2rem 1rem;
-  }
-
-  .app-header h1 {
-    font-size: 2rem;
-  }
-
-  .app-main {
+  .tab-content {
     padding: 1.5rem 1rem;
   }
 }
