@@ -71,49 +71,9 @@ export function GameCatalog({
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const stats = useMemo(() => {
-    const total = games.length;
-    const finished = games.filter(g => g.finished === true).length;
-    const avgRating = games.length > 0 
-      ? games.reduce((acc, g) => acc + (g.star_rating ?? 0), 0) / games.length 
-      : 0;
-    return { total, finished, unfinished: total - finished, avgRating };
-  }, [games]);
-
   return (
     <div className="game-catalog">
       <div className="catalog-header">
-        <div className="stats-container">
-          <div className="stat-card">
-            <span className="material-symbols-outlined stat-icon">sports_esports</span>
-            <div className="stat-info">
-              <span className="stat-value">{stats.total}</span>
-              <span className="stat-label">Total de Jogos</span>
-            </div>
-          </div>
-          <div className="stat-card">
-            <span className="material-symbols-outlined stat-icon">check_circle</span>
-            <div className="stat-info">
-              <span className="stat-value">{stats.finished}</span>
-              <span className="stat-label">Finalizados</span>
-            </div>
-          </div>
-          <div className="stat-card">
-            <span className="material-symbols-outlined stat-icon">pending</span>
-            <div className="stat-info">
-              <span className="stat-value">{stats.unfinished}</span>
-              <span className="stat-label">Em Progresso</span>
-            </div>
-          </div>
-          <div className="stat-card">
-            <span className="material-symbols-outlined stat-icon">star</span>
-            <div className="stat-info">
-              <span className="stat-value">{stats.avgRating.toFixed(1)}</span>
-              <span className="stat-label">Média de Avaliação</span>
-            </div>
-          </div>
-        </div>
-
         <div className="search-container">
           <span className="material-symbols-outlined search-icon">search</span>
           <input
