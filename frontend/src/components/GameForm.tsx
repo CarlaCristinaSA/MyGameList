@@ -19,7 +19,6 @@ export function GameForm({ onSubmit, isLoading = false, initialData, onCancel }:
   });
   const [hoveredStar, setHoveredStar] = useState<number | null>(null);
 
-  // Preenche o formulário quando initialData muda
   useEffect(() => {
     if (initialData) {
       setFormData({
@@ -118,7 +117,7 @@ export function GameForm({ onSubmit, isLoading = false, initialData, onCancel }:
               key={star}
               type="button"
               className={`star-button ${
-                star <= (hoveredStar ?? formData.star_rating) ? 'filled' : ''
+                star <= (hoveredStar ?? formData.star_rating ?? 0) ? 'filled' : ''
               }`}
               onMouseEnter={() => setHoveredStar(star)}
               onMouseLeave={() => setHoveredStar(null)}
