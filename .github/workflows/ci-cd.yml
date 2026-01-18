@@ -24,7 +24,7 @@ jobs:
 
     - name: Build and Test with Maven
       working-directory: ./backend
-      run: mvn clean verify
+      run: mvn clean verify -DskipTests=false
 
     - name: Upload test results
       if: always()

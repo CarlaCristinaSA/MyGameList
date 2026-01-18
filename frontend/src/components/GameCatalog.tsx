@@ -54,9 +54,14 @@ export function GameCatalog({
   }, [games, searchTerm, filter, sortBy]);
 
   // Resetar para página 1 quando filtros mudarem
+  const resetPage = useMemo(() => {
+    return () => setCurrentPage(1);
+  }, []);
+  
+  // Executar reset quando filtros mudarem
   useMemo(() => {
-    setCurrentPage(1);
-  }, [searchTerm, filter, sortBy]);
+    resetPage();
+  }, [searchTerm, filter, sortBy, resetPage]);
 
   // Calcular paginação
   const totalPages = Math.ceil(filteredAndSortedGames.length / itemsPerPage);
