@@ -64,9 +64,8 @@ export function useGamesAPI() {
     setIsLoading(true);
     setError(null);
     try {
-      // Envia apenas os campos necessários, sem id (auto-increment no backend)
-      const gameToCreate: Game = { id: 0, ...gameInput };
-      const newGame = await api.games.create(gameToCreate);
+      // Não envia o campo id - será gerado automaticamente no backend
+      const newGame = await api.games.create(gameInput);
       return newGame;
     } catch (err) {
       const errorMsg = err instanceof Error ? err.message : 'Erro desconhecido';

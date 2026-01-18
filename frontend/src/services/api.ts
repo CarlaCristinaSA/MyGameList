@@ -90,8 +90,8 @@ export const api = {
       }
     },
 
-    // POST /api/game/v2 - Cria um jogo (envia o objeto completo)
-    create: async (game: Game): Promise<Game> => {
+    // POST /api/game/v2 - Cria um jogo (não envia id, será auto-gerado)
+    create: async (game: Omit<Game, 'id'>): Promise<Game> => {
       try {
         console.log('Enviando jogo para a API:', JSON.stringify(game, null, 2));
         const response = await fetch(`${API_BASE_URL}/game/v2`, {
