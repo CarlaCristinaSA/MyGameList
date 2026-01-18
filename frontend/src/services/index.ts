@@ -1,0 +1,1 @@
+export { useGamesAPI } from './useGamesAPI';

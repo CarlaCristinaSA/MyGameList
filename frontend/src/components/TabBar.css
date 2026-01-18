@@ -1,0 +1,68 @@
+.tab-bar {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  background: var(--color-bg-card);
+  border-radius: 16px;
+  padding: 0.5rem;
+  box-shadow: 0 4px 20px rgba(255, 182, 193, 0.15);
+  border: 2px solid var(--color-border);
+}
+
+.tab-button {
+  flex: 1;
+  padding: 1rem 2rem;
+  background: transparent;
+  border: none;
+  border-radius: 12px;
+  color: var(--color-text-light);
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: none;
+}
+
+.tab-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.tab-button:hover::before {
+  opacity: 0.3;
+}
+
+.tab-button:hover {
+  color: var(--color-secondary);
+  transform: translateY(-2px);
+}
+
+.tab-button.active {
+  color: var(--color-secondary-dark);
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(255, 105, 180, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.5);
+}
+
+.tab-button.active::after {
+  content: '✦';
+  margin-left: 0.5rem;
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.2); }
+}

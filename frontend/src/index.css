@@ -1,0 +1,85 @@
+:root {
+  font-family: 'Segoe UI', system-ui, -apple-system, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+
+  /* Paleta de cores - Rosa claro e Marrom chocolate */
+  --color-primary: #FFB6C1; /* Rosa claro */
+  --color-primary-light: #FFC8D0;
+  --color-primary-dark: #FF9BAA;
+  --color-secondary: #7B3F00; /* Marrom chocolate */
+  --color-secondary-light: #A0522D;
+  --color-secondary-dark: #5C2E00;
+  --color-accent: #FF69B4; /* Rosa mais vibrante */
+  --color-bg: #FFF5F7; /* Rosa muito claro de fundo */
+  --color-bg-card: #FFFFFF;
+  --color-text: #4A2511; /* Marrom escuro para texto */
+  --color-text-light: #7B3F00;
+  --color-border: #FFD4DC;
+  --color-success: #90C695;
+  --color-error: #E07A7A;
+
+  color: var(--color-text);
+  background: linear-gradient(135deg, #FFF5F7 0%, #FFE8ED 100%);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 600;
+  color: var(--color-secondary);
+  text-decoration: inherit;
+  transition: color 0.3s ease;
+}
+a:hover {
+  color: var(--color-accent);
+}
+
+body {
+  margin: 0;
+  display: block;
+  min-width: 320px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #FFF5F7 0%, #FFE8ED 100%);
+  background-attachment: fixed;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+  color: var(--color-secondary);
+}
+
+h2, h3 {
+  color: var(--color-secondary);
+}
+
+button {
+  border-radius: 12px;
+  border: 2px solid var(--color-border);
+  padding: 0.7em 1.5em;
+  font-size: 1em;
+  font-weight: 600;
+  font-family: inherit;
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+  color: var(--color-secondary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(255, 182, 193, 0.2);
+}
+button:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 105, 180, 0.3);
+}
+button:active {
+  transform: translateY(0);
+}
+button:focus,
+button:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
