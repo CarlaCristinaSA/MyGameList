@@ -6,9 +6,10 @@ interface GameFormProps {
   onSubmit: (game: CreateGameInput) => void;
   isLoading?: boolean;
   initialData?: Game | null;
+  onCancel?: () => void;
 }
 
-export function GameForm({ onSubmit, isLoading = false, initialData }: GameFormProps) {
+export function GameForm({ onSubmit, isLoading = false, initialData, onCancel }: GameFormProps) {
   const [formData, setFormData] = useState<CreateGameInput>({
     name: '',
     developer: '',
@@ -141,14 +142,25 @@ export function GameForm({ onSubmit, isLoading = false, initialData }: GameFormP
         <label htmlFor="finished">Finalizado</label>
       </div>
 
-      <button type="submit" className="submit-button" disabled={isLoading}>
-        {isLoading 
-          ? 'Salvando...' 
-          : isEditing 
-            ? 'Atualizar Jogo' 
-            : 'Cadastrar Jogo'
-        }
-      </button>
+      <div className="form-actions">
+        {onCancel && (
+          <button type="button" className="cancel-button" onClick={onCancel}>
+            <span className="material-symbols-outlined">close</span>
+            Cancelar
+          </button>
+        )}
+        <button type="submit" className="submit-button" disabled={isLoading}>
+          <span className="material-symbols-outlined">
+            {isLoading ? 'hourglass_empty' : isEditing ? 'edit' : 'add_circle'}
+          </span>
+          {isLoading 
+            ? 'Salvando...' 
+            : isEditing 
+              ? 'Atualizar Jogo' 
+              : 'Cadastrar Jogo'
+          }
+        </button>
+      </div>
     </form>
   );
 }

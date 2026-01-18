@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Navbar, Home, GameForm, GameCatalog } from './components';
+import { Navbar, Home, GameForm, GameCatalog, Modal } from './components';
 import type { Game, CreateGameInput } from './types/Game';
 import { useGamesAPI } from './services';
 import './App.css';
@@ -8,6 +8,7 @@ function App() {
   const [activeTab, setActiveTab] = useState<'home' | 'cadastro' | 'catalogo'>('home');
   const [games, setGames] = useState<Game[]>([]);
   const [editingGame, setEditingGame] = useState<Game | null>(null);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
   
   const { fetchGames, createGame, updateGame, deleteGame, isLoading, error } = useGamesAPI();
@@ -46,7 +47,7 @@ function App() {
   // Função para editar um jogo
   const handleEditGame = (game: Game) => {
     setEditingGame(game);
-    setActiveTab('cadastro');
+    setShowEditModal(true);
   };
 
   // Função para atualizar um jogo
@@ -58,7 +59,7 @@ function App() {
       );
       alert('Jogo atualizado com sucesso!');
       setEditingGame(null);
-      setActiveTab('catalogo'); // Vai direto para o catálogo após atualizar
+      setShowEditModal(false);
     } else {
       alert('Erro ao atualizar jogo!');
     }
@@ -66,14 +67,12 @@ function App() {
 
   // Função para deletar um jogo
   const handleDeleteGame = async (id: number) => {
-    if (window.confirm('Deseja deletar este jogo?')) {
-      const success = await deleteGame(id);
-      if (success) {
-        setGames((prev) => prev.filter((game) => game.id !== id));
-        alert('Jogo deletado com sucesso!');
-      } else {
-        alert('Erro ao deletar jogo!');
-      }
+    const success = await deleteGame(id);
+    if (success) {
+      setGames((prev) => prev.filter((game) => game.id !== id));
+      alert('Jogo deletado com sucesso!');
+    } else {
+      alert('Erro ao deletar jogo!');
     }
   };
 
@@ -135,6 +134,27 @@ function App() {
           </div>
         )}
       </main>
+
+      {/* Modal de Edição */}
+      <Modal
+        isOpen={showEditModal}
+        onClose={() => {
+          setShowEditModal(false);
+          setEditingGame(null);
+        }}
+        title={editingGame ? 'Editar Jogo' : 'Novo Jogo'}
+        size="large"
+      >
+        <GameForm
+          onSubmit={handleSubmitForm}
+          isLoading={isLoading}
+          initialData={editingGame}
+          onCancel={() => {
+            setShowEditModal(false);
+            setEditingGame(null);
+          }}
+        />
+      </Modal>
     </div>
   );
 }

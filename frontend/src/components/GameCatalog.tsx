@@ -65,28 +65,28 @@ export function GameCatalog({
       <div className="catalog-header">
         <div className="stats-container">
           <div className="stat-card">
-            <span className="stat-icon">🎮</span>
+            <span className="material-symbols-outlined stat-icon">sports_esports</span>
             <div className="stat-info">
               <span className="stat-value">{stats.total}</span>
               <span className="stat-label">Total de Jogos</span>
             </div>
           </div>
           <div className="stat-card">
-            <span className="stat-icon">✓</span>
+            <span className="material-symbols-outlined stat-icon">check_circle</span>
             <div className="stat-info">
               <span className="stat-value">{stats.finished}</span>
               <span className="stat-label">Finalizados</span>
             </div>
           </div>
           <div className="stat-card">
-            <span className="stat-icon">⏳</span>
+            <span className="material-symbols-outlined stat-icon">pending</span>
             <div className="stat-info">
               <span className="stat-value">{stats.unfinished}</span>
               <span className="stat-label">Em Progresso</span>
             </div>
           </div>
           <div className="stat-card">
-            <span className="stat-icon">⭐</span>
+            <span className="material-symbols-outlined stat-icon">star</span>
             <div className="stat-info">
               <span className="stat-value">{stats.avgRating.toFixed(1)}</span>
               <span className="stat-label">Média de Avaliação</span>
@@ -95,7 +95,7 @@ export function GameCatalog({
         </div>
 
         <div className="search-container">
-          <span className="search-icon">🔍</span>
+          <span className="material-symbols-outlined search-icon">search</span>
           <input
             type="text"
             placeholder="Procurar por nome do jogo..."
@@ -119,13 +119,15 @@ export function GameCatalog({
                 className={`filter-btn ${filter === 'finished' ? 'active' : ''}`}
                 onClick={() => setFilter('finished')}
               >
-                ✓ Finalizados
+                <span className="material-symbols-outlined btn-icon-inline">check_circle</span>
+                Finalizados
               </button>
               <button
                 className={`filter-btn ${filter === 'unfinished' ? 'active' : ''}`}
                 onClick={() => setFilter('unfinished')}
               >
-                ⏳ Em Progresso
+                <span className="material-symbols-outlined btn-icon-inline">pending</span>
+                Em Progresso
               </button>
             </div>
           </div>
@@ -137,19 +139,22 @@ export function GameCatalog({
                 className={`sort-btn ${sortBy === 'name' ? 'active' : ''}`}
                 onClick={() => setSortBy('name')}
               >
-                📝 Nome
+                <span className="material-symbols-outlined btn-icon-inline">sort_by_alpha</span>
+                Nome
               </button>
               <button
                 className={`sort-btn ${sortBy === 'rating' ? 'active' : ''}`}
                 onClick={() => setSortBy('rating')}
               >
-                ⭐ Avaliação
+                <span className="material-symbols-outlined btn-icon-inline">star</span>
+                Avaliação
               </button>
               <button
                 className={`sort-btn ${sortBy === 'year' ? 'active' : ''}`}
                 onClick={() => setSortBy('year')}
               >
-                📅 Ano
+                <span className="material-symbols-outlined btn-icon-inline">calendar_month</span>
+                Ano
               </button>
             </div>
           </div>
@@ -165,7 +170,7 @@ export function GameCatalog({
 
       {!isLoading && filteredAndSortedGames.length === 0 && (
         <div className="empty-state">
-          <span className="empty-icon">🎮</span>
+          <span className="material-symbols-outlined empty-icon">sports_esports</span>
           <h3 className="empty-title">
             {games.length === 0
               ? 'Nenhum jogo cadastrado'
