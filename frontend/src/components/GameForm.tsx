@@ -123,14 +123,16 @@ export function GameForm({ onSubmit, isLoading = false, initialData, onCancel }:
               onMouseLeave={() => setHoveredStar(null)}
               onClick={() => setFormData((prev) => ({ ...prev, star_rating: star }))}
             >
-              ⭐
+              <span className="material-symbols-outlined">
+                {star <= (hoveredStar ?? formData.star_rating ?? 0) ? 'star' : 'star_outline'}
+              </span>
             </button>
           ))}
-          <span className="rating-display">{formData.star_rating}/5</span>
         </div>
       </div>
 
-      <div className="form-group checkbox">
+      <div className="form-group checkbox-button-group">
+        <label>Finalizado</label>
         <input
           type="checkbox"
           id="finished"
@@ -138,7 +140,9 @@ export function GameForm({ onSubmit, isLoading = false, initialData, onCancel }:
           checked={formData.finished}
           onChange={handleChange}
         />
-        <label htmlFor="finished">Finalizado</label>
+        <label htmlFor="finished" className="checkbox-button">
+          Finalizado
+        </label>
       </div>
 
       <div className="form-actions">
