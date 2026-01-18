@@ -43,8 +43,8 @@
 
 .card-badge-container {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 2rem;
+  right: 2rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -53,17 +53,18 @@
 }
 
 .finished-badge {
-  background: linear-gradient(135deg, var(--color-success), #A8D5AB);
+  background: linear-gradient(135deg, #FF69B4, #FFB6C1);
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 20px;
   font-size: 0.85rem;
   font-weight: 700;
-  box-shadow: 0 4px 12px rgba(144, 198, 149, 0.4);
+  box-shadow: 0 4px 12px rgba(255, 105, 180, 0.4);
   display: flex;
   align-items: center;
   gap: 0.4rem;
   animation: slideInRight 0.5s ease;
+  line-height: 1.3;
 }
 
 .badge-icon {
@@ -125,7 +126,7 @@
 .card-header {
   padding: 2rem 2rem 1.5rem;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 1rem;
   border-bottom: 2px solid rgba(255, 182, 193, 0.2);
   background: rgba(255, 255, 255, 0.5);
@@ -213,9 +214,10 @@
 .rating-container {
   margin-top: 0.5rem;
   padding: 1.2rem;
-  background: linear-gradient(135deg, rgba(255, 182, 193, 0.15), rgba(255, 200, 208, 0.1));
+  background: rgba(255, 245, 247, 0.6);
   border-radius: 16px;
-  border: 2px solid rgba(255, 182, 193, 0.3);
+  border: 1px solid rgba(255, 182, 193, 0.2);
+  transition: all 0.3s ease;
 }
 
 .rating-header {
