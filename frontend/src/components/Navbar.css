@@ -22,27 +22,12 @@
 .navbar-brand {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
   cursor: pointer;
   transition: transform 0.3s ease;
 }
 
 .navbar-brand:hover {
   transform: translateY(-2px);
-}
-
-.navbar-icon {
-  font-size: 2rem;
-  animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%, 100% { 
-    transform: translateY(0); 
-  }
-  50% { 
-    transform: translateY(-5px); 
-  }
 }
 
 .navbar-title {
@@ -71,6 +56,11 @@
   transition: all 0.3s ease;
   border-radius: 8px;
   position: relative;
+  outline: none;
+}
+
+.navbar-item:focus {
+  outline: none;
 }
 
 .navbar-item::after {
@@ -96,7 +86,6 @@
 }
 
 .navbar-item.active {
-  background: rgba(255, 255, 255, 0.5);
   color: var(--color-accent);
   font-weight: 700;
 }

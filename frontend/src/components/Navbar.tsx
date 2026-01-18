@@ -10,7 +10,6 @@ export function Navbar({ activeTab, onTabChange }: NavbarProps) {
     <nav className="navbar">
       <div className="navbar-container">
         <div className="navbar-brand" onClick={() => onTabChange('home')}>
-          <span className="navbar-icon">🎮</span>
           <span className="navbar-title">MyGameList</span>
         </div>
         

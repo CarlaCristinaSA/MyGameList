@@ -29,35 +29,46 @@ export function Home({ stats, onNavigate }: HomeProps) {
               className="btn-primary"
               onClick={() => onNavigate('cadastro')}
             >
-              ➕ Cadastrar Jogo
+              <span className="material-symbols-outlined">add_circle</span>
+              Cadastrar Jogo
             </button>
             <button 
               className="btn-secondary"
               onClick={() => onNavigate('catalogo')}
             >
-              📚 Ver Catálogo
+              <span className="material-symbols-outlined">book</span>
+              Ver Catálogo
             </button>
           </div>
         </div>
       </section>
 
       <section className="stats-section">
-        <h2 className="section-title">Estatísticas da Coleção</h2>
+        <h2 className="section-title">
+          <span className="material-symbols-outlined">analytics</span>
+          Estatísticas da Coleção
+        </h2>
         <div className="stats-grid">
           <div className="stat-card">
-            <div className="stat-icon">📊</div>
+            <div className="stat-icon">
+              <span className="material-symbols-outlined">analytics</span>
+            </div>
             <div className="stat-value">{stats.total}</div>
             <div className="stat-label">Total de Jogos</div>
           </div>
           
           <div className="stat-card">
-            <div className="stat-icon">✅</div>
+            <div className="stat-icon">
+              <span className="material-symbols-outlined">check_circle</span>
+            </div>
             <div className="stat-value">{stats.finished}</div>
             <div className="stat-label">Jogos Concluídos</div>
           </div>
           
           <div className="stat-card">
-            <div className="stat-icon">⭐</div>
+            <div className="stat-icon">
+              <span className="material-symbols-outlined">star</span>
+            </div>
             <div className="stat-value">{stats.avgRating}</div>
             <div className="stat-label">Avaliação Média</div>
           </div>
@@ -68,7 +79,9 @@ export function Home({ stats, onNavigate }: HomeProps) {
         <h2 className="section-title">Funcionalidades</h2>
         <div className="features-grid">
           <div className="feature-card">
-            <div className="feature-icon">📝</div>
+            <div className="feature-icon">
+              <span className="material-symbols-outlined">edit_note</span>
+            </div>
             <h3 className="feature-title">Cadastre Seus Jogos</h3>
             <p className="feature-description">
               Adicione jogos com informações detalhadas: título, descrição, data de lançamento e muito mais.
@@ -76,7 +89,9 @@ export function Home({ stats, onNavigate }: HomeProps) {
           </div>
           
           <div className="feature-card">
-            <div className="feature-icon">⭐</div>
+            <div className="feature-icon">
+              <span className="material-symbols-outlined">grade</span>
+            </div>
             <h3 className="feature-title">Avalie e Classifique</h3>
             <p className="feature-description">
               Dê notas de 0 a 5 estrelas para seus jogos e marque quais você já terminou.
@@ -84,7 +99,9 @@ export function Home({ stats, onNavigate }: HomeProps) {
           </div>
           
           <div className="feature-card">
-            <div className="feature-icon">🔍</div>
+            <div className="feature-icon">
+              <span className="material-symbols-outlined">search</span>
+            </div>
             <h3 className="feature-title">Pesquise e Filtre</h3>
             <p className="feature-description">
               Encontre rapidamente qualquer jogo da sua coleção com busca inteligente.
@@ -92,7 +109,9 @@ export function Home({ stats, onNavigate }: HomeProps) {
           </div>
           
           <div className="feature-card">
-            <div className="feature-icon">📊</div>
+            <div className="feature-icon">
+              <span className="material-symbols-outlined">bar_chart</span>
+            </div>
             <h3 className="feature-title">Acompanhe Estatísticas</h3>
             <p className="feature-description">
               Veja quantos jogos você tem, quantos completou e sua média de avaliações.
