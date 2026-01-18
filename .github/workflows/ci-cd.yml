@@ -2,13 +2,13 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ main, feat/testando ]
+    branches: [ main ]
   pull_request:
-    branches: [main, feat/testando ]
+    branches: [ main ]
 
 jobs:
   # Backend: Build e Testes
-  backend-build-and-test:
+  Testes-Backend:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,7 +27,7 @@ jobs:
       run: mvn clean install -DskipTests
 
   # Frontend: Build e Testes
-  frontend-build-and-test:
+  Testes-Frontend:
     runs-on: ubuntu-latest
 
     steps:
