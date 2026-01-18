@@ -21,7 +21,7 @@ export function Home({ stats, onNavigate }: HomeProps) {
           </p>
           <p className="hero-description">
             Organize, avalie e acompanhe sua coleção de jogos de forma simples e intuitiva.
-            Nunca mais esqueça quais jogos você jogou ou quer jogar!
+            Nunca mais esqueça quais jogos você jogou!
           </p>
           
           <div className="hero-actions">
