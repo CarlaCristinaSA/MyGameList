@@ -99,14 +99,14 @@ export function GameForm({ onSubmit, isLoading = false, initialData, onCancel }:
       </div>
 
       <div className="form-group">
-        <label htmlFor="year">Ano</label>
+        <label htmlFor="year">Ano de Lançamento</label>
         <input
           type="number"
           id="year"
           name="year"
           value={formData.year}
           onChange={handleChange}
-          placeholder="Ano"
+          placeholder="Ano de Lançamento"
         />
       </div>
 
