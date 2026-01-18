@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: trabalho-gc-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: game_db
+      MYSQL_USER: gameuser
+      MYSQL_PASSWORD: gamepass
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: always
+
+  app:
+    build: .
+    container_name: trabalho-gc-app
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/game_db
+      SPRING_DATASOURCE_USERNAME: gameuser
+      SPRING_DATASOURCE_PASSWORD: gamepass
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
