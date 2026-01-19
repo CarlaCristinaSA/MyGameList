@@ -7,8 +7,8 @@ on:
     branches: [ main ]
 
 jobs:
-  # Backend: Build e Testes
-  Testes-Backend:
+  # Backend: Build
+  Build-Backend:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,9 +22,29 @@ jobs:
         java-version: '21'
         cache: 'maven'
 
-    - name: Build and Test with Maven
+    - name: Build with Maven
       working-directory: ./backend
-      run: mvn clean install
+      run: mvn clean package -DskipTests
+
+  # Backend: Testes
+  Test-Backend:
+    needs: Build-Backend
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '21'
+        cache: 'maven'
+
+    - name: Run Tests with Maven
+      working-directory: ./backend
+      run: mvn test
 
   # Frontend: Build e Testes
   Testes-Frontend:
@@ -51,7 +71,7 @@ jobs:
 
   # Docker: Build and Push to Docker Hub
   build-and-push:
-    needs: [Testes-Backend, Testes-Frontend]
+    needs: [Build-Backend, Test-Backend, Testes-Frontend]
     runs-on: ubuntu-latest
 
     steps:
