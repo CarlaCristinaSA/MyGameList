@@ -24,7 +24,7 @@ jobs:
 
     - name: Build and Test with Maven
       working-directory: ./backend
-      run: mvn clean install -DskipTests
+      run: mvn clean install
 
   # Frontend: Build e Testes
   Testes-Frontend:
