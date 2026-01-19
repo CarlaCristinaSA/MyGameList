@@ -1,19 +1,23 @@
 server:
   port: 8888
 cors:
-  originPatterns: http://localhost:8080,http://localhost:3000
+  originPatterns: http://localhost:8080,http://localhost:3000,https://.*\.ngrok.*
 file:
-  upload-dir: /Users/jxvii/OneDrive/Documentos/apiUpload
+  upload-dir: /tmp/test-upload
 spring:
   application:
     name: rest-api-with-spring-boot
   datasource:
-    driver-class-name:  com.mysql.cj.jdbc.Driver
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password: 
   jpa:
     hibernate:
-        ddl-auto: none
+        ddl-auto: create-drop
     properties:
       hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
     show-sql: false
     open-in-view: false
   servlet:
@@ -28,4 +32,4 @@ logging:
 
 spring-doc:
   swagger-ui:
-    enabled: true
+    enabled: false
