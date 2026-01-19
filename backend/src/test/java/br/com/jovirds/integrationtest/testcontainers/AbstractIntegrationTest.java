@@ -1,5 +1,6 @@
 package br.com.jovirds.integrationtest.testcontainers;
 
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.aot.AotApplicationContextInitializer;
@@ -12,11 +13,12 @@ import org.testcontainers.lifecycle.Startables;
 import java.util.Map;
 import java.util.stream.Stream;
 
+@SpringBootTest
 @ContextConfiguration(initializers = AbstractIntegrationTest.Initializer.class)
 public class AbstractIntegrationTest {
 
     static class Initializer implements AotApplicationContextInitializer<ConfigurableApplicationContext> {
-        static MySQLContainer<?> mysql = new MySQLContainer<>("mysql:9.1.0");
+        static MySQLContainer<?> mysql = new MySQLContainer<>("mysql:8.0");
 
         private static void startContainers() {
             Startables.deepStart(Stream.of(mysql)).join();
@@ -26,7 +28,9 @@ public class AbstractIntegrationTest {
             return Map.of(
                     "spring.datasource.url", mysql.getJdbcUrl(),
                     "spring.datasource.username", mysql.getUsername(),
-                    "spring.datasource.password", mysql.getPassword()
+                    "spring.datasource.password", mysql.getPassword(),
+                    "spring.jpa.hibernate.ddl-auto", "create-drop",
+                    "spring.flyway.enabled", "false"
             );
         }
 
