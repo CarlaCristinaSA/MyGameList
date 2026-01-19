@@ -124,6 +124,7 @@ public class GameController implements GameControllerDocs {
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE}
     )
+    @CrossOrigin(originPatterns = "*")
     @Override
     public GameDTO create(@RequestBody GameDTO game) { return gameService.create(game); }
 
@@ -143,10 +144,12 @@ public class GameController implements GameControllerDocs {
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE}
     )
+    @CrossOrigin(originPatterns = "*")
     @Override
     public GameDTO update(@RequestBody GameDTO game) { return gameService.update(game); }
 
     @DeleteMapping(value = "/{id}")
+    @CrossOrigin(originPatterns = "*")
     @Override
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         gameService.delete(id);

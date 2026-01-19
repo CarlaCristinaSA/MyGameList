@@ -4,6 +4,8 @@ import br.com.jovirds.controllers.docs.GameControllerDocsV2;
 import br.com.jovirds.data.dto.V2.GameDTOV2;
 import br.com.jovirds.service.GameService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/game/v2")
 @Tag(name = "Games V2", description = "Endpoints for Managing Games V2 with Star Rating")
 public class GameControllerV2 implements GameControllerDocsV2 {
+
+    private static final Logger logger = LoggerFactory.getLogger(GameControllerV2.class);
 
     @Autowired
     private GameService gameService;
@@ -68,8 +72,10 @@ public class GameControllerV2 implements GameControllerDocsV2 {
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE}
     )
+    @CrossOrigin(originPatterns = "*")
     @Override
-    public GameDTOV2 createV2(@RequestBody GameDTOV2 game) { 
+    public GameDTOV2 createV2(@RequestBody GameDTOV2 game) {
+        logger.info("POST /api/game/v2 - Received game: {}", game);
         return gameService.createv2(game); 
     }
 
@@ -77,6 +83,7 @@ public class GameControllerV2 implements GameControllerDocsV2 {
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE}
     )
+    @CrossOrigin(originPatterns = "*")
     @Override
     public GameDTOV2 updateV2(@RequestBody GameDTOV2 game) { 
         return gameService.updatev2(game); 

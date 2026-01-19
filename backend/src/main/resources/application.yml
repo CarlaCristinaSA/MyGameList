@@ -1,5 +1,5 @@
 cors:
-  originPatterns: http://localhost:8080,http://localhost:3000,https://*.ngrok-free.app,https://*.ngrok.io
+  originPatterns: http://localhost:8080,http://localhost:3000,https://.*\.ngrok.*
 file:
   upload-dir: /Users/jxvii/OneDrive/Documentos/apiUpload
 server:
